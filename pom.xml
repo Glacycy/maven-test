@@ -15,6 +15,7 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.release>17</maven.compiler.release>
     <junit.version>5.11.0</junit.version>
+    <mode>DEV</mode>
   </properties>
 
   <dependencyManagement>
@@ -52,6 +53,15 @@
 
   <build>
     <finalName>${project.artifactId}</finalName>
+
+    <!-- Activation remplacement des vars via Maven -->
+    <resources>
+      <resource>
+        <directory>src/main/resources</directory>
+        <filtering>true</filtering>
+      </resource>
+    </resources>
+
     <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
       <plugins>
         <!-- clean lifecycle, see https://maven.apache.org/ref/current/maven-core/lifecycles.html#clean_Lifecycle -->
@@ -118,4 +128,22 @@
       </plugin>
     </plugins>
   </build>
+
+  <profiles>
+    <profile>
+      <id>dev</id>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+      <properties>
+        <mode>DEV</mode>
+      </properties>
+    </profile>
+    <profile>
+      <id>prod</id>
+      <properties>
+        <mode>PROD</mode>
+      </properties>
+    </profile>
+  </profiles>
 </project>
